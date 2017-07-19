@@ -88,3 +88,31 @@ MAC = "AAAA:BBBB:CCCC"
 MAC = "1111:2222:3333"
 MAC = MAC.replace(':','')
 print(bin(int(MAC)))
+
+"""Задание 3.9
+Найти индекс последнего вхождения элемента с конца.
+Например, для списка num_list, индекс последнего вхождения элемента 10 - 4; для списка word_list, индекс последнего вхождения элемента 'ruby' - 6.
+Сделать решение общим (то есть, не привязываться к конкретному элементу) и проверить на разных списках и элементах.
+Не использовать для решения циклы (for, while) и условия (if/else).
+Подсказка: функция len() возвращает длину списка.
+num_list = [10, 2, 30, 100, 10, 50, 11, 30, 15, 7]
+word_list = ['python', 'ruby', 'perl', 'ruby', 'perl', 'python', 'ruby', 'perl']
+"""
+
+num_list = [1, 2, 30, 5, 3, 3, 11, 5, 1, 5]
+num_list.reverse()
+reverse_position = num_list.index(int(5))
+last_position = len(num_list) - reverse_position - 1
+print last_position
+
+word_list = ['python', 'ruby', 'perl', 'ruby', 'perl', 'python', 'ruby', 'perl']
+word_list.reverse()
+reverse_position = word_list.index('python')
+last_position = len(word_list) - reverse_position - 1
+print last_position
+
+new_list = ['new', 'new', 'old', 'new', 'new', 'new', 'old', 'new', 'old', 'new', 'new', 'new', 'old', 'new', 'old']
+new_list.reverse()
+reverse_position = new_list.index('old')
+last_position = len(new_list) - reverse_position - 1
+print last_position
