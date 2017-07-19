@@ -30,5 +30,4 @@ MAC = "AAAA:BBBB:CCCC"
 
 mac = "AAAA:BBBB:CCCC"
 mac = mac.replace(':','.')
-result = ['MAC',' = ','"',mac,'"']
-print(''.join(result))
+print('MAC = "%s' % mac)
