@@ -79,3 +79,12 @@ NAT = "ip nat inside source list ACL interface FastEthernet0/1 overload"
 
 NAT = "ip nat inside source list ACL interface FastEthernet0/1 overload"
 print(NAT.replace('Fast', 'Gigabit'))
+
+"""Задание 3.7
+Преобразовать MAC-адрес в двоичную строку (без двоеточий).
+MAC = "AAAA:BBBB:CCCC"
+"""
+
+MAC = "1111:2222:3333"
+MAC = MAC.replace(':','')
+print(bin(int(MAC)))
