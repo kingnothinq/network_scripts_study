@@ -31,3 +31,15 @@ MAC = "AAAA:BBBB:CCCC"
 mac = "AAAA:BBBB:CCCC"
 mac = mac.replace(':','.')
 print('MAC = "%s' % mac)
+
+"""Задание 3.3
+Получить из строки CONFIG список VLAN вида ['1', '3', '10', '20', '30', '100'].
+CONFIG = "switchport trunk allowed vlan 1,3,10,20,30,100"
+"""
+
+CONFIG = "switchport trunk allowed vlan 1,3,10,20,30,100"
+CONFIG = CONFIG.split()
+vlans = CONFIG[-1]
+vlans = vlans.split(',')
+print vlans
+
