@@ -23,3 +23,12 @@ dict_ospf = dict(zip(keys_ospf, list_ospf))
 for key, value in dict_ospf.items():
     print '{:45}{:45}'.format(key,value)
 
+"""Задание 3.2
+Преобразовать строку MAC с формата XXXX:XXXX:XXXX в XXXX.XXXX.XXXX
+MAC = "AAAA:BBBB:CCCC"
+"""
+
+mac = "AAAA:BBBB:CCCC"
+mac = mac.replace(':','.')
+result = ['MAC',' = ','"',mac,'"']
+print(''.join(result))
