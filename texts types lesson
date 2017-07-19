@@ -72,3 +72,10 @@ VLANS = [10, 20, 30, 1, 2, 100, 10, 30, 3, 4, 10]
 VLANS = set(VLANS)
 print(sorted(VLANS))
 
+"""Задание 3.6
+Обработать строку NAT таким образом, чтобы в имени интерфейса вместо FastEthernet было GigabitEthernet.
+NAT = "ip nat inside source list ACL interface FastEthernet0/1 overload"
+"""
+
+NAT = "ip nat inside source list ACL interface FastEthernet0/1 overload"
+print(NAT.replace('Fast', 'Gigabit'))
