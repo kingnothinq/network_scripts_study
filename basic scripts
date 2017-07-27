@@ -55,8 +55,8 @@ while True:
         binar_mask = int(mask) * '1'
         binar_mask = binar_mask + ((32 - len(binar_mask)) * '0')
         print('\nMask:')
-        print("/{}".format(mask))
-        print int(binar_mask[:8],2),int(binar_mask[8:16],2),int(binar_mask[16:24],2),int(binar_mask[24:],2)
+        print('/{}'.format(mask))
+        print'{:<1}{:<15}{:<15}{:<20}'.format(int(binar_mask[:8],2),int(binar_mask[8:16],2),int(binar_mask[16:24],2),int(binar_mask[24:],2))
         print binar_mask[:8],binar_mask[8:16],binar_mask[16:24],binar_mask[24:]
         
         break
