@@ -9,3 +9,54 @@ Mask:
 255       255       255       0
 11111111  11111111  11111111  00000000
 """
+
+while True:
+
+#Вводим данные
+
+    ip_and_mask = raw_input('Введите IP адрес в формате: X.X.X.X/Y\n')
+    ip, mask = ip_and_mask.split('/')
+
+#Проверяем верность введенных данных    
+    
+    #Проверяем IP
+    proverka_ip = False
+    ip = [int(i) for i in ip.split('.')]
+    for i in ip:
+        if i < 0 or i > 255 or len(ip) != 4:
+            print
+            print ('Неверный IP-адрес. Повторите ввод.\n')
+            break
+        else:
+            proverka_ip = True
+    
+    #Проверяем маску
+    proverka_mask = False
+    mask = int(mask)
+    if mask < 0 or mask > 32:
+        print
+        print ('Неверная маска. Повторите ввод.\n')    
+    else:
+        proverka_mask = True
+
+#Выводим результат на экран
+    
+    if proverka_ip == True and proverka_mask == True:
+        
+        #Вывод блока сети
+        print
+        print('Network:')
+        #Вывод списка из чисел в строке
+        print(' '.join([str(a).ljust(8) for a in ip]))
+        print(' '.join([ "{:08b}".format(int(c)) for c in ip]))
+        
+        #Вывод маски сети
+        #Вычисляем бинарную маску подсети (32 бита = X-бит заполненных еденицами (/X - берем из короткой маски) + Y-бит заполненных нулями
+        binar_mask = int(mask) * '1'
+        binar_mask = binar_mask + ((32 - len(binar_mask)) * '0')
+        print('\nMask:')
+        print("/{}".format(mask))
+        print int(binar_mask[:8],2),int(binar_mask[8:16],2),int(binar_mask[16:24],2),int(binar_mask[24:],2)
+        print binar_mask[:8],binar_mask[8:16],binar_mask[16:24],binar_mask[24:]
+        
+        break
