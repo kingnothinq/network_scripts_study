@@ -144,3 +144,76 @@ while True:
         print(' '.join([ "{:08b}".format(int(y)) for y in mask]))        
         
         break
+
+"""Задание 4.1b
+Преобразовать скрипт из задания 4.1a таким образом, чтобы сеть/маска не запрашивались у пользователя, а передавались как аргумент скрипту.
+"""
+
+from sys import argv
+
+while True:
+
+#Вводим данные
+     
+    ip_and_mask = argv[1:]
+    print('{:<1}'.format(ip_and_mask))
+    ip, mask = ip_and_mask.split('/')
+
+#Проверяем верность введенных данных    
+    
+    #Проверяем IP
+    proverka_ip = False
+    ip = [int(i) for i in ip.split('.')]
+    for i in ip:
+        if i < 0 or i > 255 or len(ip) != 4:
+            print
+            print ('Неверный IP-адрес. Повторите ввод.\n')
+            break
+        else:
+            proverka_ip = True
+    
+    #Проверяем маску
+    proverka_mask = False
+    mask = int(mask)
+    if mask < 0 or mask > 32:
+        print
+        print ('Неверная маска. Повторите ввод.\n')    
+    else:
+        proverka_mask = True
+
+    if proverka_ip == True and proverka_mask == True:
+        
+#Преобразуем адрес хоста в адрес сети
+
+		#Вычисляем бинарную маску подсети (32 бита = X-бит заполненных еденицами (/X - берем из короткой маски) + Y-бит заполненных нулями
+        binar_mask = int(mask) * '1'
+        binar_mask = binar_mask + ((32 - len(binar_mask)) * '0')
+        
+        #Записываем короткую маску для последующего вывода
+        short_mask = str(mask)
+        
+		#Вычисляем десятичную маску в обычном виде X.X.X.X
+        mask = [int(binar_mask[:8],2), int(binar_mask[8:16],2), int(binar_mask[16:24],2), int(binar_mask[24:],2)]
+		
+        network = []
+		
+		#Получаем адрес сети
+        for a, b in enumerate(mask):
+		    network.append(ip[a] & b)
+		
+#Выводим результат на экран
+        
+        #Вывод блока сети
+        print
+        print('Network:')
+        print(' '.join([str(x).ljust(8) for x in network]))
+        print(' '.join([ "{:08b}".format(int(y)) for y in network]))
+        
+        #Вывод маски
+        print
+        print('Mask:')
+        print('/{}'.format(short_mask))
+        print(' '.join([str(x).ljust(8) for x in mask]))
+        print(' '.join([ "{:08b}".format(int(y)) for y in mask]))        
+        
+        break
