@@ -14,31 +14,52 @@
     D: 224-239
 """
 
-while True:
+"""Задание 5.1a
+Сделать копию скрипта задания 5.1.
+Дополнить скрипт:
+Добавить проверку введенного IP-адреса.
+Адрес считается корректно заданным, если он:
+состоит из 4 чисел разделенных точкой,
+каждое число в диапазоне от 0 до 255.
+Если адрес задан неправильно, выводить сообщение:
+'Incorrect IPv4 address'
+"""
+
+"""Задание 5.1b
+Сделать копию скрипта задания 5.1a.
+Дополнить скрипт:
+Если адрес был введен неправильно, запросить адрес снова.
+"""
+
+While True:
     
-    #Вводим данные
+    proverka_ip = False
     
-    ip = raw_input('Введите IP-адрес в формае X.X.X.X: ')
-    ip = ip.split('.')
+    While proverka_ip == False:
     
-    #Проверяем, что IP-адрес верный
-    
-    try:    
-        proverka_ip = False
+        #Вводим данные
         
-        for i in ip:
-            if int(i) < 0 or int(i) > 255 or len(ip) != 4:
-                print
-                print ('IP-адрес должен состоять из цифр и записан в формате X.X.X.X\n')
-                break
-            else:
-                proverka_ip = True
+        ip = raw_input('Введите IP-адрес в формае X.X.X.X: ')
+        ip = ip.split('.')
         
-    except ValueError:
-        print 'IP-адрес должен состоять из цифр и записан в формате X.X.X.X\n'
+        #Проверяем, что IP-адрес верный
         
-    if proverka_ip == True:
-    
+        Try:    
+        
+            for i in ip:
+                if int(i) < 0 or int(i) > 255 or len(ip) != 4:
+                    print
+                    print ('Incorrect IPv4 address\n')
+                    break
+                else:
+                    proverka_ip = True
+            
+        Except ValueError:
+            print
+            print 'Incorrect IPv4 address\n'
+            
+    Else:
+        
         #Выясняем класс IP-адреса и выводим результат
         
         print
