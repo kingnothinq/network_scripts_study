@@ -1,1 +1,68 @@
-123
+"""Задание 5.1
+    Запросить у пользователя ввод IP-адреса в десятично-точечном формате.
+    Определить какому классу принадлежит IP-адрес.
+    В зависимости от класса адреса, вывести на стандартный поток вывода:
+        'unicast' - если IP-адрес принадлежит классу A, B или C
+        'multicast' - если IP-адрес принадлежит классу D
+        'local broadcast' - если IP-адрес равен 255.255.255.255
+        'unassigned' - если IP-адрес равен 0.0.0.0
+        'unused' - во всех остальных случаях
+Подсказка по классам (диапазон значений первого байта в десятичном формате):
+    A: 1-127
+    B: 128-191
+    C: 192-223
+    D: 224-239
+"""
+
+while True:
+    
+    #Вводим данные
+    
+    ip = raw_input('Введите IP-адрес в формае X.X.X.X: ')
+    ip = ip.split('.')
+    
+    #Проверяем, что IP-адрес верный
+    
+    try:    
+        proverka_ip = False
+        
+        for i in ip:
+            if int(i) < 0 or int(i) > 255 or len(ip) != 4:
+                print
+                print ('IP-адрес должен состоять из цифр и записан в формате X.X.X.X\n')
+                break
+            else:
+                proverka_ip = True
+        
+    except ValueError:
+        print 'IP-адрес должен состоять из цифр и записан в формате X.X.X.X\n'
+        
+    if proverka_ip == True:
+    
+        #Выясняем класс IP-адреса и выводим результат
+        
+        print
+        if int(ip[0]) > 0 and int(ip[0]) < 223:
+            print 'unicast'
+        elif int(ip[0]) > 222 and int(ip[0]) < 240:
+            print 'multicast'
+        elif int(ip[0]) == 255:
+            broadcast = 0
+            for i in ip:
+                if int(i) == 255:
+                    broadcast += 1
+            if broadcast == 4:
+                print 'local broadcast'
+            else:
+                print 'unused'
+        elif int(ip[0]) == 0:
+            unassigned = 0
+            for i in ip:
+                if int(i) == 0:
+                    unassigned += 1
+            if unassigned == 4:
+                print 'unassigned'
+            else:
+                print 'unused'
+        else:
+            print 'unused'
