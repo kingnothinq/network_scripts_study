@@ -488,7 +488,7 @@ template = {'access':access_template, 'trunk':trunk_template}
 #Генерируем конфигу
 
 print 'Interface', interface
-print '\n'.join(template[mode]) % vlan
+print '\n'.join(template[mode.lower()]) % vlan
 
 """Задание 4.3a
 В этой задаче нельзя использовать условие if.
@@ -519,7 +519,7 @@ vlan_or_vlans = {'access':'Enter VLAN number:', 'trunk':'Enter allowed VLANs:'}
 
 mode = raw_input('Enter interface mode (access/trunk):')
 interface = raw_input('Enter interface type and number:')
-print vlan_or_vlans[mode],
+print vlan_or_vlans[mode.lower()],
 vlan = raw_input()
 
 #Создаем словарь для выбора вариантов
@@ -528,6 +528,6 @@ template = {'access':access_template, 'trunk':trunk_template}
 
 #Генерируем конфигу
 
+print
 print 'Interface', interface
-print '\n'.join(template[mode]) % vlan
-"""
+print '\n'.join(template[mode.lower()]) % vlan
