@@ -1,1 +1,27 @@
-213
+"""Задание 6.1
+Аналогично заданию 3.1 обработать строки из файла ospf.txt и вывести информацию по каждой в таком виде:
+Protocol:               OSPF
+Prefix:                 10.0.24.0/24
+AD/Metric:              110/41
+Next-Hop:               10.0.13.3
+Last update:            3d18h
+Outbound Interface:     FastEthernet0/0
+Так как это первое задание с открытием файла, заготовка для открытия файла уже сделана.
+with open('ospf.txt', 'r') as f:
+    for line in f:
+        print line
+"""
+
+with open('C:/Users/demchuk.igor/Desktop/exercises/06_files/ospf.txt', 'r') as f:
+    for ospf_route in f:
+        ospf_route = ospf_route.replace('[','')
+        ospf_route = ospf_route.replace(']','')
+        ospf_route = ospf_route.replace(',','')
+        ospf_route = ospf_route.replace('via','')
+        ospf_route = ospf_route.replace('O','OSPF')
+        list_ospf = ospf_route.split()
+        keys_ospf = ['Protocol','Prefix','AD/Metric','Next-Hop','Last update','Outbound Interface']
+        dict_ospf = dict(zip(keys_ospf, list_ospf))
+        print
+        for key, value in dict_ospf.items():
+            print '{:45}{:45}'.format(key,value)
