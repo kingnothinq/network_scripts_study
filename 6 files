@@ -78,3 +78,24 @@ with open('C:/Users/demchuk.igor/Desktop/exercises/06_files/CAM_table.txt', 'r')
         for mac in line.split():
             if len(mac.replace('.','')) == 12 and len(mac.split('.')) == 3:
                 print line
+
+
+"""Задание 6.3a
+Сделать копию скрипта задания 6.3
+Дополнить скрипт:
+Отсортировать вывод по номеру VLAN
+"""
+ 
+mac_table = dict()
+with open('C:/Users/demchuk.igor/Desktop/exercises/06_files/CAM_table.txt', 'r') as f:
+    for line in f:
+
+        for elem in line.split():
+        
+        
+            if len(elem.replace('.','')) == 12 and len(elem.split('.')) == 3:
+                mac = line.replace('\n','')
+            if len(elem) > 0 and len(elem) < 5 and elem.isdigit():
+                vlan = str(elem)
+            mac_table = {x: mac for x in vlan}
+    print mac_table.items()
