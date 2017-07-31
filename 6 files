@@ -14,11 +14,7 @@ with open('ospf.txt', 'r') as f:
 
 with open('C:/Users/demchuk.igor/Desktop/exercises/06_files/ospf.txt', 'r') as f:
     for ospf_route in f:
-        ospf_route = ospf_route.replace('[','')
-        ospf_route = ospf_route.replace(']','')
-        ospf_route = ospf_route.replace(',','')
-        ospf_route = ospf_route.replace('via','')
-        ospf_route = ospf_route.replace('O','OSPF')
+        ospf_route = ospf_route.replace('[','').replace(']','').replace(',','').replace('via','').replace('O','OSPF')
         list_ospf = ospf_route.split()
         keys_ospf = ['Protocol','Prefix','AD/Metric','Next-Hop','Last update','Outbound Interface']
         dict_ospf = dict(zip(keys_ospf, list_ospf))
