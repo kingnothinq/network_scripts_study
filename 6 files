@@ -37,3 +37,26 @@ with open(file_name, 'r') as f:
     for line in f:
         if line.startswith('!') == False:
             print line.strip()
+            
+"""Задание 6.2a
+Сделать копию скрипта задания 6.2.
+Дополнить скрипт:
+Скрипт не должен выводить команды, в которых содержатся слова, которые указаны в списке ignore.
+ignore = ['duplex', 'alias', 'Current configuration']
+"""
+
+from sys import argv
+
+file_name = argv[1:]
+
+file_name = 'C:/Users/demchuk.igor/Desktop/exercises/06_files/config_sw1.txt'
+ignore = ['duplex', 'alias', 'Current configuration']
+
+with open(file_name, 'r') as f:
+    for line in f:
+        if line.startswith('!') == False:
+            if ignore[0] in line or ignore[1] in line or ignore[2] in line:
+                pass
+            else:
+                print line.strip()
+
