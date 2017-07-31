@@ -75,6 +75,6 @@ with open(file_name, 'r') as f:
  
 with open('C:/Users/demchuk.igor/Desktop/exercises/06_files/CAM_table.txt', 'r') as f:
     for line in f:
-        for elem in line.split():
-            if len(elem.replace('.','')) == 12 and len(elem.split('.')) == 3:
+        for mac in line.split():
+            if len(mac.replace('.','')) == 12 and len(mac.split('.')) == 3:
                 print line
