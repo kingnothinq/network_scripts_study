@@ -207,7 +207,6 @@ def generate_access_config(access, psecurity = True):
     #Два пустых списка для заполнения keys и values будущего словаря
     interfaces = []
     commands = []
-    slovar = {}
 
     #Генерируем список команд для каждого интерфейса
     for idx, int in enumerate(access.keys()):
