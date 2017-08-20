@@ -24,14 +24,12 @@
 ...]
 Проверить работу функции на примере словаря access_dict.
 def generate_access_config(access):
-    """
     access - словарь access-портов,
     для которых необходимо сгенерировать конфигурацию, вида:
         { 'FastEthernet0/12':10,
           'FastEthernet0/14':11,
           'FastEthernet0/16':17}
     Возвращает список всех портов в режиме access с конфигурацией на основе шаблона
-    """
     access_template = ['switchport mode access',
                        'switchport access vlan',
                        'switchport nonegotiate',
@@ -75,3 +73,167 @@ def generate_access_config(access):
 #Проверяем, что функция работает                
 generate_access_config(access_dict)
             
+"""Задание 7.1a
+Сделать копию скрипта задания 7.1.
+Дополнить скрипт:
+ввести дополнительный параметр, который контролирует будет ли настроен port-security
+имя параметра 'psecurity'
+по умолчанию значение False
+Проверить работу функции на примере словаря access_dict, с генерацией конфигурации port-security и без.
+def generate_access_config(access):
+    access - словарь access-портов,
+    для которых необходимо сгенерировать конфигурацию, вида:
+        { 'FastEthernet0/12':10,
+          'FastEthernet0/14':11,
+          'FastEthernet0/16':17 }
+    psecurity - контролирует нужна ли настройка Port Security. По умолчанию значение False
+        - если значение True, то настройка выполняется с добавлением шаблона port_security
+        - если значение False, то настройка не выполняется
+    Возвращает список всех команд, которые были сгенерированы на основе шаблона
+    access_template = ['switchport mode access',
+                       'switchport access vlan',
+                       'switchport nonegotiate',
+                       'spanning-tree portfast',
+                       'spanning-tree bpduguard enable']
+    port_security = ['switchport port-security maximum 2',
+                     'switchport port-security violation restrict',
+                     'switchport port-security']
+access_dict = { 'FastEthernet0/12':10,
+                'FastEthernet0/14':11,
+                'FastEthernet0/16':17,
+                'FastEthernet0/17':150 }
+"""                
+
+#Создаем словарь с аргументами            
+access_dict = { 'FastEthernet0/12':10,
+                'FastEthernet0/14':11,
+                'FastEthernet0/16':17,
+                'FastEthernet0/17':150 }
+                
+def generate_access_config(access, psecurity = True):
+#Функция, герерирующая конфигурацию для access-портов"""
+    
+    #Шаблоны команд
+    access_template = ['switchport mode access',
+                       'switchport access vlan',
+                       'switchport nonegotiate',
+                       'spanning-tree portfast',
+                       'spanning-tree bpduguard enable']  
+    
+    port_security = ['switchport port-security maximum 2',
+                     'switchport port-security violation restrict',
+                     'switchport port-security']
+    
+    #Генерируем список команд для каждого интерфейса
+    for int in access.keys():
+        print int
+        for command in access_template:
+            
+            #Подставляем номер VLAN в команду switchport access vlan
+            if command.endswith('access vlan'):
+                print ' %s %s' % (command, access[int])
+            
+            #Печатаем остальное
+            else:
+                print ' %s' % command    
+
+        #Проверяем аргумент psecurity и, если он true, то генерируем конфиг
+        if psecurity == True:    
+            for command in port_security:    
+                print ' %s' % command    
+                
+#Проверяем, что функция работает                
+generate_access_config(access_dict)
+
+"""Задание 7.1b
+Сделать копию скрипта задания 7.1a.
+Изменить скрипт таким образом, чтобы функция возвращала не список команд, а словарь:
+ключи: имена интерфейсов, вида 'FastEthernet0/12'
+значения: список команд, который надо выполнить на этом интерфейсе:
+    ['switchport mode access',
+     'switchport access vlan 10',
+     'switchport nonegotiate',
+     'spanning-tree portfast',
+     'spanning-tree bpduguard enable']
+Проверить работу функции на примере словаря access_dict, с генерацией конфигурации port-security и без.
+def generate_access_config(access):
+    """
+    access - словарь access-портов,
+    для которых необходимо сгенерировать конфигурацию, вида:
+        { 'FastEthernet0/12':10,
+          'FastEthernet0/14':11,
+          'FastEthernet0/16':17 }
+    psecurity - контролирует нужна ли настройка Port Security. По умолчанию значение False
+        - если значение True, то настройка выполняется с добавлением шаблона port_security
+        - если значение False, то настройка не выполняется
+    Функция возвращает словарь:
+    - ключи: имена интерфейсов, вида 'FastEthernet0/1'
+    - значения: список команд, который надо выполнить на этом интерфейсе
+
+    access_template = ['switchport mode access',
+                       'switchport access vlan',
+                       'switchport nonegotiate',
+                       'spanning-tree portfast',
+                       'spanning-tree bpduguard enable']
+    port_security = ['switchport port-security maximum 2',
+                     'switchport port-security violation restrict',
+                     'switchport port-security']
+access_dict = { 'FastEthernet0/12':10,
+                'FastEthernet0/14':11,
+                'FastEthernet0/16':17,
+                'FastEthernet0/17':150 }
+"""
+
+#Создаем словарь с аргументами            
+access_dict = { 'FastEthernet0/12':10,
+                'FastEthernet0/14':11,
+                'FastEthernet0/16':17,
+                'FastEthernet0/17':150 }
+
+def generate_access_config(access, psecurity = True):
+#Функция, герерирующая конфигурацию для access-портов"""
+
+    #Шаблоны команд
+    access_template = ['switchport mode access',
+                       'switchport access vlan',
+                       'switchport nonegotiate',
+                       'spanning-tree portfast',
+                       'spanning-tree bpduguard enable']  
+
+    port_security = ['switchport port-security maximum 2',
+                     'switchport port-security violation restrict',
+                     'switchport port-security']
+
+    #Два пустых списка для заполнения keys и values будущего словаря
+    interfaces = []
+    commands = []
+    slovar = {}
+
+    #Генерируем список команд для каждого интерфейса
+    for idx, int in enumerate(access.keys()):
+
+        #Создаем ключи
+        interfaces.append(int)
+        
+        #Создаем пустые значения для последующего заполнения
+        commands.append([])
+        
+        for command in access_template:
+       
+           #Подставляем номер VLAN в команду switchport access vlan
+            if command.endswith('access vlan'):
+                commands[idx].append(command + ' ' + str(access[int]))
+           #Добавляем остальное
+            else:
+                commands[idx].append(command) 
+       
+        #Проверяем аргумент psecurity и, если он true, то добавлям секьюрность
+        if psecurity == True:    
+            for command in port_security:
+                commands[idx].append(command)
+    
+    #Возвращаем словарь
+    return dict(zip(interfaces,commands))
+     
+#Проверяем, что функция работает                
+generate_access_config(access_dict)
