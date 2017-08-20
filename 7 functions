@@ -43,3 +43,35 @@ access_dict = { 'FastEthernet0/12':10,
                 'FastEthernet0/17':150 }
 """
 
+#Создаем словарь с аргументами            
+access_dict = { 'FastEthernet0/12':10,
+                'FastEthernet0/14':11,
+                'FastEthernet0/16':17,
+                'FastEthernet0/17':150 }
+                
+def generate_access_config(access):
+#Функция, герерирующая конфигурацию для access-портов"""
+    
+    #Шаблон команд
+    access_template = ['switchport mode access',
+                       'switchport access vlan',
+                       'switchport nonegotiate',
+                       'spanning-tree portfast',
+                       'spanning-tree bpduguard enable']  
+    
+    #Генерируем список команд для каждого интерфейса
+    for int in access.keys():
+        print int
+        for command in access_template:
+            
+            #Подставляем номер VLAN в команду switchport access vlan
+            if command.endswith('access vlan'):
+                print ' %s %s' % (command, access[int])
+            
+            #Печатаем остальное
+            else:
+                print ' %s' % command        
+
+#Проверяем, что функция работает                
+generate_access_config(access_dict)
+            
