@@ -236,3 +236,67 @@ def generate_access_config(access, psecurity = True):
      
 #Проверяем, что функция работает                
 generate_access_config(access_dict)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Создаем словарь с аргументами            
+trunk_dict = { 'FastEthernet0/1':[10,20,30],
+               'FastEthernet0/2':[11,30],
+               'FastEthernet0/4':[17] }
+               
+def generate_trunk_config(trunk):
+    """
+    trunk - словарь trunk-портов для которых необходимо сгенерировать конфигурацию.
+
+    Возвращает список всех команд, которые были сгенерированы на основе шаблона
+    """
+    trunk_template = ['switchport trunk encapsulation dot1q',
+                      'switchport mode trunk',
+                      'switchport trunk native vlan 999',
+                      'switchport trunk allowed vlan']
+
+    #Два пустых списка для заполнения keys и values будущего словаря
+    interfaces = []
+    commands = []
+
+    #Генерируем список команд для каждого интерфейса
+    for idx, int in enumerate(trunk.keys()):
+
+        #Создаем ключи
+        interfaces.append(int)
+        
+        #Создаем пустые значения для последующего заполнения
+        commands.append([])
+        
+        for command in trunk_template:
+       
+           #Подставляем номер VLAN в команду switchport trunk allowed vlan
+            if command.endswith('allowed vlan'):
+                print int
+                #for vlan in trunk[int]:
+                #    vlan = str(vlan)
+                #
+                #print ' '.join(trunk[int])
+                #commands[idx].append(command + ' ' + str(','.join(str(trunk[int]))))
+           #Добавляем остальное
+            else:
+                pass
+                #commands[idx].append(command) 
+    
+    #Возвращаем словарь
+    #return dict(zip(interfaces,commands))
+     
+#Проверяем, что функция работает                
+generate_trunk_config(trunk_dict)
