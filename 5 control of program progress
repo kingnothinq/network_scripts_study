@@ -140,12 +140,8 @@ for int in fast_int['access']:
 #Генерируем название интерфейса
 for int in fast_int['trunk']:
     print 'interface FastEthernet' + int
-
-    #Дополняем команду, которая этого требует
-    for command in trunk_template:
-        if command.endswith('switchport trunk allowed vlan'):
-        
-            #Фильтруем конкретный интерфейс и что нужно на нем сделать
+      
+    #Фильтруем конкретный интерфейс и что нужно на нем сделать
     for command in trunk_template:
         if command.endswith('switchport trunk allowed vlan'):
         
