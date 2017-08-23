@@ -352,7 +352,7 @@ def get_int_vlan_map(cfgfile):
             line = line.replace('\n','')
             
             """Если строка начинается со слова interface (исключая interface Vlan), то
-            сохраняем имя интерфейса как временное значение. Все строки, после interface
+            сохраняем имя интерфейса как временное значение. Все строки после interface
             считаем частью нужного конфига, все остальное - мусор.
             """
             if line.startswith('interface') and not 'Vlan' in line:
