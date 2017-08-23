@@ -330,3 +330,51 @@ ________________________________________________________________________________
 Функция ожидает в качестве аргумента имя конфигурационного файла.
 Проверить работу функции на примере файла config_sw1.txt
 """
+
+def get_int_vlan_map(cfgfile):
+    """
+    Функция get_int_vlan_map, которая обрабатывает конфигурационный файл коммутатора и возвращает два словаря, которые содержат
+    порты и их конфигурацию для режима Access и Trunk.
+    """
+    
+    #Определяем переменные
+    config_interface = False
+    interfaces_access = []
+    interfaces_trunk = []
+    vlan_access = []
+    vlan_trunk = []
+    
+    #Открываем файл построчно
+    with open(cfgfile) as f:
+        for line in f:
+        
+            #Вырезаем ненужные переводы строк
+            line = line.replace('\n','')
+            
+            """Если строка начинается со слова interface (исключая interface Vlan), то
+            сохраняем имя интерфейса как временное значение. Все строки, после interface
+            считаем частью нужного конфига, все остальное - мусор.
+            """
+            if line.startswith('interface') and not 'Vlan' in line:
+                temp_interface = line.replace('interface ','')
+                config_interface = True
+                continue
+            elif line.startswith('!'):
+                config_interface = False
+    
+            #Если строка является частью нужного конфига, то обрабатываем ее
+            if config_interface:
+                
+                #Вырезаем список vlan из интерфейсов в режиме access
+                if 'access vlan' in line:
+                    interfaces_access.append(temp_interface)
+                    vlan_access.append(line.replace(' switchport access vlan ',''))
+                #Вырезаем список vlan из интерфейсов в режиме trunk
+                elif 'trunk allowed vlan' in line:
+                    interfaces_trunk.append(temp_interface)
+                    vlan_trunk.append(line.replace(' switchport trunk allowed vlan ','').split(','))
+    
+    return dict(zip(interfaces_access,vlan_access)), dict(zip(interfaces_trunk,vlan_trunk))
+
+#Проверяем, что функция работает 
+get_int_vlan_map('C:/Users/kingnothinq/Desktop/exercises/07_functions/config_sw1.txt')
