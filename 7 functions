@@ -372,10 +372,7 @@ def get_int_vlan_map(cfgfile):
                 #Вырезаем список vlan из интерфейсов в режиме trunk
                 elif 'trunk allowed vlan' in line:
                     interfaces_trunk.append(temp_interface)
-                    temp_trunk_vlan = line.replace(' switchport trunk allowed vlan ','').split(',')
-                    for idx, i in enumerate(temp_trunk_vlan):
-                        temp_trunk_vlan[idx] = int(i)
-                    vlan_trunk.append(temp_trunk_vlan)
+                    vlan_trunk.append([int(vlan) for vlan in line.replace(' switchport trunk allowed vlan ','').split(',')])
                     
     return dict(zip(interfaces_access,vlan_access)), dict(zip(interfaces_trunk,vlan_trunk))
 
@@ -440,10 +437,7 @@ def get_int_vlan_map(cfgfile):
                 #Вырезаем список vlan из интерфейсов в режиме trunk
                 elif 'trunk allowed vlan' in line:
                     interfaces_trunk.append(temp_interface)
-                    temp_trunk_vlan = line.replace(' switchport trunk allowed vlan ','').split(',')
-                    for idx, i in enumerate(temp_trunk_vlan):
-                        temp_trunk_vlan[idx] = int(i)
-                    vlan_trunk.append(temp_trunk_vlan)
+                    vlan_trunk.append([int(vlan) for vlan in line.replace(' switchport trunk allowed vlan ','').split(',')])
                 elif 'switchport mode access' in line:
                     interfaces_access.append(temp_interface)
                     vlan_access.append(1)
