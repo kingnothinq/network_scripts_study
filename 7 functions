@@ -478,108 +478,85 @@ def config_to_dict(config):
 """
 
 
+ignore = ['duplex', 'alias', 'Current configuration']
+
+def ignore_command(command, ignore):
+    """
+    Функция проверяет содержится ли в команде слово из списка ignore.
+
+    command - строка. Команда, которую надо проверить
+    ignore - список. Список слов
+
+    Возвращает True, если в команде содержится слово из списка ignore, False - если нет
+    """
+    ignore_command = False
+
+    for word in ignore:
+        if word in command:
+            return True
+    return ignore_command
 
 
+def config_to_dict(config):
+    """
+    config - имя конфигурационного файла коммутатора
+
+    Возвращает словарь:
+    - Все команды верхнего уровня (глобального режима конфигурации), будут ключами.
+    - Если у команды верхнего уровня есть подкоманды,
+      они должны быть в значении у соответствующего ключа, в виде списка (пробелы вначале можно оставлять).
+    - Если у команды верхнего уровня нет подкоманд, то значение будет пустым списком
+    """
+    
+    result = {}
+    first_level_command = []
+    second_level_command = []
+    temp_second_level_command = []
+    first_level_check = False
+    first_level_id = 0
+    second_level_id = 0
+    
+    #Открываем файл построчно
+    with open(config) as f:            
+        for line in f:            
+                    
+            #Вырезаем ненужные переводы строк            
+            line = line.replace('\n','')
+            
+            #Last configuration change не имеет команды верхнего уровня, но попадает в список команд нижнего уровня, т.к. начинается с пробела
+            if line.startswith('!'):
+                continue
+            elif ignore_command(line,ignore):
+                continue
+            
+            for symbol in line:
+                if symbol.isalnum():                  
+                    first_level_check = True
+                    first_level_id = first_level_id + 1
+                    break
+                else:
+                    first_level_check = False
+                    second_level_id = first_level_id
+                    break                    
+                        
+            if first_level_check:
+                first_level_command.append(line)
+                second_level_command.append(temp_second_level_command)
+                temp_second_level_command = []
+                temp_second_level_command.append([])
+                print first_level_id,
+                print line
+            else:
+                temp_second_level_command.append(line)
+                print second_level_id,
+                print line
+    
+    
+    #for key, value in zip(first_level_command, second_level_command):
+    #    result[key] = value
+    #
+    #return dict(zip(first_level_command, second_level_command))
+
+json.dumps(config_to_dict('C:/Users/kingnothinq/Desktop/exercises/07_functions/config_sw1.txt'), indent=4, sort_keys=True)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Current configuration : 2033 bytes
-!
-! Last configuration change at 13:11:59 UTC Thu Feb 25 2016
-!
-version 15.0
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-!
-hostname sw1
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-interface FastEthernet0/0
- switchport mode access
- switchport access vlan 10
- duplex auto
-!
-interface FastEthernet0/1
- switchport trunk encapsulation dot1q
- switchport trunk allowed vlan 100,200
- switchport mode trunk
- duplex auto
-!
-interface FastEthernet0/2
- switchport mode access
- switchport access vlan 20
- duplex auto
-!         
-interface FastEthernet0/3
- switchport trunk encapsulation dot1q
- switchport trunk allowed vlan 100,300
- duplex auto
- switchport mode trunk
-!         
-interface FastEthernet1/0
- switchport mode access
- switchport access vlan 20
- duplex auto
-!
-interface FastEthernet1/1
- switchport mode access
- switchport access vlan 30
- duplex auto
-!
-interface FastEthernet1/2
- switchport trunk encapsulation dot1q
- switchport trunk allowed vlan 400,500
- switchport mode trunk
- duplex auto
-!
-interface FastEthernet1/3
- duplex auto
-!
-interface Vlan100
- ip address 10.0.100.1 255.255.255.0
-!
-!
-alias configure sh do sh 
-alias exec ospf sh run | s ^router ospf
-alias exec bri show ip int bri | exc unass
-alias exec id show int desc
-alias exec top sh proc cpu sorted | excl 0.00%__0.00%__0.00%
-alias exec c conf t
-alias exec diff sh archive config differences nvram:startup-config system:running-config
-alias exec shcr sh run | s ^crypto
-alias exec desc sh int desc | ex down
-alias exec bgp sh run | s ^router bgp
-alias exec xc sh xconnect all
-alias exec vc sh mpls l2tr vc
-!
-line con 0
- exec-timeout 0 0
- privilege level 15
- logging synchronous
-line aux 0
-line vty 0 4
- login
- transport input all
-!
-end
